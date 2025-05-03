@@ -7,11 +7,10 @@ load_dotenv()
 
 api_id = int(os.getenv("API_ID"))
 api_hash = os.getenv("API_HASH")
-bot_token = os.getenv("BOT_TOKEN")
 source_channel = os.getenv("SOURCE_CHANNEL")
 target_channel = os.getenv("TARGET_CHANNEL")
 
-client = TelegramClient('bot', api_id, api_hash).start(bot_token=bot_token)
+client = TelegramClient('user', api_id, api_hash)
 
 def parse_message(text):
     if not ("Long" in text or "Short" in text):
@@ -66,4 +65,5 @@ async def handler(event):
 
 print("✅ Bot çalışıyor...")
 
+client.start()
 client.run_until_disconnected()
