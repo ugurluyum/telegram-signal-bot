@@ -7,11 +7,11 @@ load_dotenv()
 
 api_id = int(os.getenv("API_ID"))
 api_hash = os.getenv("API_HASH")
-session_name = os.getenv("SESSION_NAME")
+bot_token = os.getenv("BOT_TOKEN")
 source_channel = os.getenv("SOURCE_CHANNEL")
 target_channel = os.getenv("TARGET_CHANNEL")
 
-client = TelegramClient(session_name, api_id, api_hash)
+client = TelegramClient('bot', api_id, api_hash).start(bot_token=bot_token)
 
 def parse_message(text):
     if not ("Long" in text or "Short" in text):
@@ -30,11 +30,9 @@ def parse_message(text):
     entry_price = float(price_match.group(1))
     leverage = leverage_match.group(1)
 
-    # %1 aralığı
     price_low = round(entry_price * 0.99, 5)
     price_high = round(entry_price * 1.01, 5)
 
-    # Stop Loss
     if signal_type == "Long":
         sl_price = round(entry_price * 0.95, 5)
         entry_line = f"{price_low} - {entry_price}"
@@ -44,7 +42,6 @@ def parse_message(text):
         entry_line = f"{entry_price} - {price_high}"
         signal_text = "Regular (Short)"
 
-    # Yeni mesaj metni
     message = f"""🔥 Ege Trader
 Signal Type: {signal_text}
 Name: {name}
@@ -69,5 +66,4 @@ async def handler(event):
 
 print("✅ Bot çalışıyor...")
 
-client.start()
 client.run_until_disconnected()
