@@ -10,7 +10,7 @@ api_hash = os.getenv("API_HASH")
 source_channel = os.getenv("SOURCE_CHANNEL")
 target_channel = os.getenv("TARGET_CHANNEL")
 
-client = TelegramClient('user', api_id, api_hash)
+client = TelegramClient('ugurluyum', api_id, api_hash)
 
 def parse_message(text):
     if not ("Long" in text or "Short" in text):
